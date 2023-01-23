@@ -9,6 +9,7 @@
           <div class="grid grid-cols-12 gap-4">
             <div class="col-span-12 sm:col-span-4">
                 <InputGroup
+                  v-model="dni"
                     label="Dni"
                     name="smallsize"
                     type="text"
@@ -16,18 +17,21 @@
                 />
 
                 <InputGroup
+                  v-model="postulante.paterno"
                   label="Apellido Paterno"
                   name="defaultsize"
                   type="text"
                   placeholder="Apellido Paterno"
                 />
                 <InputGroup
+                  v-model="postulante.materno"
                   label="Apellido Materno"
                   name="smallsize"
                   type="text"
                   placeholder="Apellido materno"
                 />
                 <InputGroup
+                  v-model="postulante.nombres"
                   label="Nombres"
                   name="smallsize"
                   type="text"
@@ -101,15 +105,16 @@
     components: { Textinput, Button, Card, InputGroup, VistaPrevia },
     data() {
       return {
+        tipo_doc:1,
         dni:'',
         clave:1,
         size:"8", 
         auto:"true", 
         characters:"a-z,A-Z,0-9",
         postulante: {
-          nombres:'',
-          paterno:'',
-          materno:'',
+          nombres:'Jhon Ariel',
+          paterno:'Luque',
+          materno:'cusacani',
 
         },
         constancia : {
@@ -117,14 +122,21 @@
           nombre: '',
           estado: '',
           url:''
-        }
+        },
+        data: null,
   
       };
     },
   
     methods:{
       async guardar() {
-          let res = axios.post("/medico/guardar",this.postulante, this.constancia, this.dni)
+          this.data = {
+            "postulante":this.postulante,
+            "constancia":this.constancia,
+            "dni":this.dni,
+            "tipo":1
+          }
+          let res = axios.post("http://sistema-admision-back.test/api/guardar-constancia",this.data)
           .then(response => {
             console.log(response);
             // this.PDF = response.data.datos;

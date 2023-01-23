@@ -114,11 +114,11 @@ export default {
   },
 
   computed: {
-    newMenulist: function () {
-      return this.topMenu.filter(function (item) {
-        return Boolean(!item.isHeadr);
-      });
-    },
+    // newMenulist: function () {
+    //   return this.topMenu.filter(function (item) {
+    //     return Boolean(!item.isHeadr);
+    //   });
+    // },
   },
 };
 </script>
