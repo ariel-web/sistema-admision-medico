@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Breadcrumb />
+    <!-- <Breadcrumb />
     <div class="grid grid-cols-12 gap-5 mb-5">
       <div class="2xl:col-span-3 lg:col-span-4 col-span-12">
         <div
@@ -246,7 +246,8 @@
                 +0.001.23 (0.2%)
               </div>
             </div>
-            <!-- !! end single -->
+            
+
             <div class="space-y-1">
               <h4
                 class="text-slate-600 dark:text-slate-200 text-xs font-normal"
@@ -257,7 +258,7 @@
                 $8264.35
               </div>
             </div>
-            <!-- !! end single -->
+            
             <div class="space-y-1">
               <h4
                 class="text-slate-600 dark:text-slate-200 text-xs font-normal"
@@ -268,11 +269,11 @@
                 $8264.35
               </div>
             </div>
-            <!-- !! end single -->
+            
           </div>
         </Card>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>

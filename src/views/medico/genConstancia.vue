@@ -8,8 +8,23 @@
         <div>
           <div class="grid grid-cols-12 gap-4">
             <div class="col-span-12 sm:col-span-4">
+
+               <pre>{{ selected }}</pre>
+                <VueSelect
+                  :options="programa_estudios" 
+                  label="Programa de Estudios"
+                  v-model="selected"
+                  @onchange="switchSelect"
+                /> 
+
+                <VueSelect v-model="selected" :value="value" :options="programa_estudios" >
+                  <!-- <option :value="item.value" v-for="(item, index) in programa_estudios">
+                    {{ item.label }}
+                  </option> -->
+                </VueSelect>
+              
                 <InputGroup
-                  v-model="dni"
+                   v-model="dni"
                     label="Dni"
                     name="smallsize"
                     type="text"
@@ -98,11 +113,12 @@
   import Card from "@/components/Card";
   import InputGroup from "@/components/InputGroup";
   import VistaPrevia from "./componentes/vistaPrevia.vue"
+  import VueSelect from '@/components/Select/VueSelect.vue';
   import axios from 'axios';
   
   export default {
     mixins: [window],
-    components: { Textinput, Button, Card, InputGroup, VistaPrevia },
+    components: { Textinput, Button, Card, InputGroup, VistaPrevia, VueSelect },
     data() {
       return {
         tipo_doc:1,
@@ -124,8 +140,13 @@
           url:''
         },
         data: null,
+        programa_estudios:[],
+        selected:'',
   
       };
+    },
+    created(){
+       this.getProgramas()
     },
   
     methods:{
@@ -134,6 +155,7 @@
             "postulante":this.postulante,
             "constancia":this.constancia,
             "dni":this.dni,
+            "programa":this.selected,
             "tipo":1
           }
           let res = axios.post("http://sistema-admision-back.test/api/guardar-constancia",this.data)
@@ -146,6 +168,14 @@
           });
       },
 
+      switchSelect(event) {
+        this.selected = event.target.value;
+      },
+
+      async getProgramas(){
+        let res = await axios.get('http://sistema-admision-back.test/api/select-data/get-programa-estudios');
+        this.programa_estudios = res.data.datos;
+      },
 
       generate() {
         let charactersArray = this.characters.split(',');  
@@ -168,7 +198,7 @@
         for(let i=0; i < this.size; i++) {
           password += CharacterSet.charAt(Math.floor(Math.random() * CharacterSet.length));
         }
-        this.constancia.codigo= password;
+        this.constancia.codigo = password;
       }
     },
     watch:{ 
