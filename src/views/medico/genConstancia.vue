@@ -172,6 +172,13 @@
         this.selected = event.target.value;
       },
 
+      async getConstancias(){
+        let res = await axios.get('http://sistema-admision-back.test/api/select-data/get-programa-estudios');
+        this.programa_estudios = res.data.datos;
+      },
+
+      
+
       async getProgramas(){
         let res = await axios.get('http://sistema-admision-back.test/api/select-data/get-programa-estudios');
         this.programa_estudios = res.data.datos;

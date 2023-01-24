@@ -5,7 +5,7 @@
           <vue-good-table
             :columns="columns"
             styleClass=" vgt-table centered  lesspadding2 table-head "
-            :rows="advancedTable"
+            :rows="constancias"
             :pagination-options="{
               enabled: true,
               perPage: perpage,
@@ -17,31 +17,23 @@
               enabled: true,
               selectOnCheckboxOnly: true, // only select when checkbox is clicked instead of the row
               selectioninfoClass: 'custom-class',
-              selectionText: 'rows selected',
-              clearSelectionText: 'clear',
+              selectionText: 'Constancia seleccionado',
+              clearSelectionText: 'Limpiar',
               disableSelectinfo: true, // disable the select info-500 panel on top
               selectAllByGroup: true, // when used in combination with a grouped table, add a checkbox in the header row to check/uncheck the entire group
             }"
           >
             <template v-slot:table-row="props">
-              <span v-if="props.column.field == 'customer'" class="flex">
-                <span class="w-7 h-7 rounded-full ltr:mr-3 rtl:ml-3 flex-none">
-                  <img
-                    :src="
-                      require('@/assets/images/all-img/' +
-                        props.row.customer.image)
-                    "
-                    :alt="props.row.customer.name"
-                    class="object-cover w-full h-full rounded-full"
-                  />
-                </span>
-                <span
-                  class="text-sm text-slate-600 dark:text-slate-300 capitalize"
-                  >{{ props.row.customer.name }}</span
-                >
+              <span v-if="props.column.field == 'codigo'">
+                {{ "#" + props.row.codigo }}
               </span>
-              <span v-if="props.column.field == 'order'">
-                {{ "#" + props.row.order }}
+              <span v-if="props.column.field == 'p_dni'">
+                <div style="text-align: left;">
+                  <span> {{ props.row.p_dni }} </span>
+                  <div>
+                    {{ props.row.p_nombres }} {{ props.row.p_paterno }} {{ props.row.p_materno }}
+                  </div>
+                </div>
               </span>
               <span
                 v-if="props.column.field == 'date'"
@@ -74,7 +66,7 @@
                 </span>
               </span>
               <span v-if="props.column.field == 'action'">
-                <div class="flex space-x-3 rtl:space-x-reverse">
+                <div class="flex space-x-2 rtl:space-x-reverse" style="justify-content: center;">
                   <Tooltip placement="top" arrow theme="dark">
                     <template #button>
                       <div class="action-btn">
@@ -127,7 +119,9 @@
   import Icon from "@/components/Icon";
   import Tooltip from "@/components/Tooltip";
   import Pagination from "@/components/Pagination";
-  import { advancedTable } from "@/constant/basic-tablle-data";
+  // import { advancedTable } from "@/constant/basic-tablle-data";
+  import axios from 'axios';
+
   export default {
     components: {
       Pagination,
@@ -138,30 +132,45 @@
   
     data() {
       return {
-        advancedTable,
+        constancias:[],
+        // advancedTable,
         current: 1,
         perpage: 10,
         pageRange: 5,
         searchTerm: "",
-  
+
         columns: [
           {
             label: "Constancia",
-            field: "order",
+            field: "codigo",
+
           },
           {
             label: "Postulante",
-            field: "customer",
+            field: "p_dni",
+            align: "left"
           },
           {
-            label: "Fecha",
-            field: "date",
+            label: "Nombres",
+            field: "p_nombres",
           },
+          {
+            label: "Ap. Paterno",
+            field: "p_paterno",
+          },
+          {
+            label: "Ap. Materno",
+            field: "p_paterno",
+          },
+          // {
+          //   label: "Fecha",
+          //   field: "date",
+          // },
    
-          {
-            label: "Estado",
-            field: "status",
-          },
+          // {
+          //   label: "Estado",
+          //   field: "status",
+          // },
           {
             label: "Action",
             field: "action",
@@ -169,6 +178,18 @@
         ],
       };
     },
+
+    methods:{
+      async getConstancias(){
+        let res = await axios.post('http://sistema-admision-back.test/api/get-constancias-medicas');
+        this.constancias = res.data.datos.data;
+      },
+    },
+
+    mounted() {
+      this.getConstancias(); 
+    },
+
   };
   </script>
   <style lang="scss" scoped>
