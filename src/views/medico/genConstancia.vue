@@ -8,20 +8,87 @@
         <div>
           <div class="grid grid-cols-12 gap-4">
             <div class="col-span-12 sm:col-span-4">
+             
 
-               <pre>{{ selected }}</pre>
-                <VueSelect
-                  :options="programa_estudios" 
-                  label="Programa de Estudios"
-                  v-model="selected"
-                  @onchange="switchSelect"
-                /> 
+                <h6 style="font-size: 1rem; margin-bottom: 5px;">Programa de Estudios</h6>
 
-                <VueSelect v-model="selected" :value="value" :options="programa_estudios" >
-                  <!-- <option :value="item.value" v-for="(item, index) in programa_estudios">
-                    {{ item.label }}
-                  </option> -->
-                </VueSelect>
+
+                <div
+                  class="fromGroup relative"
+                  :class="`${error ? 'has-error' : ''}  ${horizontal ? 'flex' : ''}  ${
+                    validate ? 'is-valid' : ''
+                  } `"
+                >
+                  <label
+                    v-if="label"
+                    :class="`${classLabel} inline-block input-label `"
+                    :for="name"
+                  >
+                    {{ label }}</label
+                  >
+                  <div class="relative">
+                    <div v-if="!$slots.default">
+                      <vSelect
+                        :name="label"
+                        :error="error"
+                        label="Programa de Estudios"
+                        :id="label"
+                        :readonly="isReadonly"
+                        :disabled="disabled"
+                        :validate="validate"
+                        :multiple="multiple"
+                        :options="programa_estudios"
+                        v-model="programa"
+                      >
+                      </vSelect>
+                    </div>
+                    <slot></slot>
+                    <div class="flex text-xl absolute right-[14px] top-1/2 -translate-y-1/2">
+                      <span v-if="error" class="text-danger-500">
+                        <Icon icon="heroicons-outline:information-circle" />
+                      </span>
+
+                      <span v-if="validate" class="text-success-500">
+                        <Icon icon="bi:check-lg" />
+                      </span>
+                    </div>
+                  </div>
+
+                  <span
+                    v-if="error"
+                    class="mt-2"
+                    :class="
+                      msgTooltip
+                        ? ' inline-block bg-danger-500 text-white text-[10px] px-2 py-1 rounded'
+                        : ' text-danger-500 block text-sm'
+                    "
+                    >{{ error }}</span
+                  >
+                  <span
+                    v-if="validate"
+                    class="mt-2"
+                    :class="
+                      msgTooltip
+                        ? ' inline-block bg-success-500 text-white text-[10px] px-2 py-1 rounded'
+                        : ' text-success-500 block text-sm'
+                    "
+                    >{{ validate }}</span
+                  >
+                  <span
+                    class="block text-secondary-500 font-light leading-4 text-xs mt-2"
+                    v-if="description"
+                    >{{ description }}</span
+                  >
+                </div>
+
+
+
+
+
+
+
+
+
               
                 <InputGroup
                    v-model="dni"
@@ -62,7 +129,7 @@
                 </div>
             </div>
             <div class="col-span-12 sm:col-span-8">
-              <label>Vista previa</label>
+              <h6 style="font-size: 1rem; margin-bottom: 5px;">Vista previa</h6>
               <div class="col-span-12 sm:col-span-8 border mt-2 p-2 rounded-md ">
                 <div class="w-full" style="background-color: #f2f2f2;">
                   <VistaPrevia :postulante="postulante" :dni="dni" :programa="programa"/>
@@ -113,14 +180,17 @@
   import Card from "@/components/Card";
   import InputGroup from "@/components/InputGroup";
   import VistaPrevia from "./componentes/vistaPrevia.vue"
-  import VueSelect from '@/components/Select/VueSelect.vue';
+  // import VueSelect from "@/components/Select/VueSelect";
+  import vSelect from "vue-select";
+  import "vue-select/dist/vue-select.css";
+ 
   import axios from 'axios';
   import { useToast } from "vue-toastification";
   const toast = useToast();
 
   export default {
-    mixins: [window],
-    components: { Textinput, Button, Card, InputGroup, VistaPrevia, VueSelect },
+    mixins: [window],       
+    components: { Textinput, Button, Card, InputGroup, VistaPrevia, vSelect },
     data() {
       return {
         tipo_doc:1,
@@ -141,14 +211,14 @@
           url:''
         },
         data: null,
-        programa_estudios:[],
+        programa_estudios:['MEDICINA HUMANA','EDUCACIÓN FISICA'],
         selected:'',
-        programa:'',
+        programa:'MEDICINA HUMANA',
   
       };
     },
     created(){
-       this.getProgramas()
+      //  this.getProgramas()
     },
   
     methods:{
@@ -158,7 +228,7 @@
             "postulante":this.postulante,
             "constancia":this.constancia,
             "dni":this.dni,
-            "programa":this.selected,
+            "programa":this.programa,
             "tipo":1
           }
           let res = axios.post("http://sistema-admision-back.test/api/guardar-constancia",this.data)
@@ -168,6 +238,8 @@
             // this.PDF=response.data.datos;
             // this.url = response.data.datos.url;
             // this.PrintPdf(this.url);
+            console.log("URL: ", response.data.url);
+            this.PrintPdf(response.data.url);
             this.dni = null;
             this.postulante.paterno = null
             this.postulante.materno = null
@@ -187,8 +259,6 @@
         let res = await axios.get('http://sistema-admision-back.test/api/select-data/get-programa-estudios');
         this.programa_estudios = res.data.datos;
       },
-
-      
 
       async getProgramas(){
         let res = await axios.get('http://sistema-admision-back.test/api/select-data/get-programa-estudios');
@@ -217,6 +287,15 @@
           password += CharacterSet.charAt(Math.floor(Math.random() * CharacterSet.length));
         }
         this.constancia.codigo = password;
+      },
+
+      PrintPdf (URL) {
+        var iframe = document.createElement('iframe');
+        iframe.style.display = "none";
+        iframe.src = URL;
+        document.body.appendChild(iframe);
+        iframe.contentWindow.focus();
+        iframe.contentWindow.print();
       }
     },
     watch:{ 
@@ -242,4 +321,62 @@
   
   };
   </script>
-  
+ 
+ <style lang="scss">
+.fromGroup {
+  .vs__dropdown-toggle {
+    @apply bg-transparent  dark:bg-slate-900 border-slate-200 dark:border-slate-700 dark:text-white min-h-[40px] text-slate-900 text-sm;
+  }
+  .v-select {
+    @apply dark:text-slate-300;
+  }
+  &.has-error {
+    .vs__dropdown-toggle {
+      @apply border-danger-500;
+    }
+  }
+  .vs__dropdown-option {
+    @apply dark:text-slate-100;
+  }
+  .vs__dropdown-option--highlight {
+    @apply bg-slate-900 dark:bg-slate-600 dark:bg-opacity-20 py-2 text-sm;
+  }
+  .vs__dropdown-menu {
+    li {
+      @apply capitalize;
+    }
+  }
+  .vs__dropdown-menu {
+    @apply shadow-dropdown bg-white dark:bg-slate-800  text-sm  border-[0px] dark:border-[1px] dark:border-slate-700;
+  }
+  .vs__search::placeholder {
+    @apply text-secondary-500;
+  }
+  .vs__actions svg {
+    @apply fill-secondary-500 w-[15px] h-[15px] mt-[6px] scale-[.8];
+  }
+
+  .vs--multiple {
+    .vs__selected {
+      @apply text-xs text-slate-900 dark:text-slate-300 font-light bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-700 border rounded-[3px] h-fit;
+      padding: 4px 8px !important;
+    }
+    .vs__deselect {
+      @apply dark:fill-slate-300;
+    }
+
+    .vs__selected-options {
+      @apply items-center capitalize;
+      svg {
+        @apply scale-[0.8];
+      }
+    }
+  }
+  .vs--single .vs__selected {
+    @apply dark:text-slate-300;
+  }
+  .vs__dropdown-option--disabled {
+    @apply bg-slate-50 dark:bg-slate-700;
+  }
+}
+</style>

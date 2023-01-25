@@ -35,7 +35,7 @@
         <div style="display: flex; width: 700px; justify-content: center;" >
             <div style="text-align: justify; font-size: 11pt;">
                 Que el Sr(a): <span style="text-transform: uppercase;">{{ postulante.nombres }} {{ postulante.paterno }} {{ postulante.materno }}</span>, identificado con D.N.I. N°: {{ dni }},
-                postulante al programa de Estudios de MEDICINA HUMANA, ha cumplido con el
+                postulante al programa de Estudios de <span style="text-transform: uppercase;">{{ programa }}</span>, ha cumplido con el
                 EXAMEN MÉDICO quedando APTO para continuar su inscripción.
             </div>
         </div>
