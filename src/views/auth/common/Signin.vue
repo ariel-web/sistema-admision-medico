@@ -116,7 +116,7 @@ export default {
           }
         })
         .catch(function (error) {
-          toast.error("Contraseña o usuario incorrectos", {
+          toast.error("Contraseña o usuario incorrectos", { 
               timeout: 2000,
           });
 
