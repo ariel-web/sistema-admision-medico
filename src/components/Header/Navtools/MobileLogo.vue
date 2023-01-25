@@ -1,13 +1,15 @@
 <template>
   <router-link :to="{ name: 'home' }">
     <img
-      src="@/assets/images/logo/logo-c.svg"
+      src="@/assets/images/logo/logo_unap.png"
+      width="40"
       alt=""
       v-if="!this.$store.state.isDark"
     />
 
     <img
-      src="@/assets/images/logo/logo-c-white.svg"
+      src="@/assets/images/logo/logo_unap.png"
+      width="40"
       alt=""
       v-if="this.$store.state.isDark"
     />

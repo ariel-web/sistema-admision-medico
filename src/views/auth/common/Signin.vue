@@ -1,7 +1,7 @@
 <template>
-  <form @submit.prevent="onSubmit" class="space-y-4">
+  <div class="space-y-4">
     <Textinput
-      label="Email"
+      label="Correo"
       type="email"
       placeholder="Type your email"
       name="emil"
@@ -10,7 +10,7 @@
       classInput="h-[48px]"
     />
     <Textinput
-      label="Password"
+      label="Contraseña"
       type="password"
       placeholder="8+ characters, 1 capitat letter "
       name="password"
@@ -43,25 +43,25 @@
           />
         </span>
         <span class="text-slate-500 dark:text-slate-400 text-sm leading-6"
-          >Keep me signed in</span
+          >Recuerdame</span
         >
       </label>
       <router-link
         to="/forgot-password"
         class="text-sm text-slate-800 dark:text-slate-400 leading-6 font-medium"
-        >Forgot Password?</router-link
+        >¿Olvidaste tu contraseña?</router-link
       >
     </div>
-
-    <button type="submit" class="btn btn-dark block w-full text-center">
-      Sign in
+    <button @click="guardar" class="btn btn-dark block w-full text-center">
+      Ingresar
     </button>
-  </form>
+  </div>
 </template>
 <script>
 import Textinput from "@/components/Textinput";
 import { useField, useForm } from "vee-validate";
 import * as yup from "yup";
+import axios from "axios";
 
 import { useRouter } from "vue-router";
 import { useToast } from "vue-toastification";
@@ -77,16 +77,16 @@ export default {
   setup() {
     // Define a validation schema
     const schema = yup.object({
-      email: yup.string().required("Email is required").email(),
-      password: yup.string().required("Password is required").min(8),
+      email: yup.string().required("Se requiere correo").email(),
+      password: yup.string().required("Se requiere la Contraseña ").min(8),
     });
 
     const toast = useToast();
     const router = useRouter();
 
     const formValues = {
-      email: "dashcode@gmail.com",
-      password: "dashcode",
+      email: "king@gmail.com",
+      password: "12345678",
     };
 
     const { handleSubmit } = useForm({
@@ -94,10 +94,36 @@ export default {
       initialValues: formValues,
     });
     // No need to define rules for fields
+  
 
     const { value: email, errorMessage: emailError } = useField("email");
     const { value: password, errorMessage: passwordError } =
-      useField("password");
+    useField("password");
+
+    const guardar = async () => {        
+        let res = await axios.post(
+          "http://sistema-admision-back.test/api/auth/login",
+          { email: email.value, password: password.value }
+        )  
+        .then(function (response) {
+          if (response.status === 200){
+            localStorage.setItem("activeUser", JSON.stringify(response.data.datos));
+            console.log(response);
+            router.push("/app/home");
+            toast.success("Ingresando al Sistema", {
+              timeout: 2000,
+            });
+          }
+        })
+        .catch(function (error) {
+          toast.error("Contraseña o usuario incorrectos", {
+              timeout: 2000,
+          });
+
+        });
+        console.log(res.data);
+    };
+
 
     const onSubmit = handleSubmit((values) => {
       let isUser = localStorage.users;
@@ -111,16 +137,16 @@ export default {
 
         if (isUser[userIndex].password === values.password) {
           router.push("/app/home");
-          toast.success(" Login  successfully", {
+          toast.success("Ingresando al Sistema", {
             timeout: 2000,
           });
         } else {
-          toast.error(" Password not match ", {
+          toast.error("La contraseña Incorrecta", {
             timeout: 2000,
           });
         }
       } else {
-        toast.error(" User not found", {
+        toast.error("Usuario no encontrado", {
           timeout: 2000,
         });
       }
@@ -128,13 +154,12 @@ export default {
 
     return {
       email,
-
       emailError,
       password,
       passwordError,
-      onSubmit,
+      guardar,
+
     };
   },
 };
 </script>
-<style lang="scss"></style>

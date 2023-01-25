@@ -4,32 +4,46 @@
       <div class="left-column relative z-[1]">
         <div class="max-w-[520px] pt-20 ltr:pl-20 rtl:pr-20">
           <router-link to="/">
-            <img
-              src="@/assets/images/logo/logo.svg"
-              alt=""
-              class="mb-10"
-              v-if="!this.$store.state.isDark"
-            />
-            <img
-              src="@/assets/images/logo/logo-white.svg"
-              alt=""
-              class="mb-10"
-              v-else
-            />
+            <div style="display: flex;">
+              <div>
+                <img
+                  src="@/assets/images/logo/logo_unap.png"
+                  width="60"
+                  alt=""
+                  class="mb-10"
+                  v-if="!this.$store.state.isDark"
+                />
+                <img
+                  src="@/assets/images/logo/logo_unap.png"
+                  width="60"
+                  alt=""
+                  class="mb-10"
+                  v-else
+                />
+              </div>
+              <div class="pl-3" style="display: flex; margin-top: 20px;">
+                <div>
+                  <div><h6 style="font-size:1.1rem;">UNIVERSIDAD NACIONAL DEL ALTIPLANO</h6></div>
+                  <div>Comisión de admisión 2023</div>
+                </div> 
+              </div>
+            </div>
           </router-link>
 
           <h4>
-            Unlock your Project
+            
             <span class="text-slate-800 dark:text-slate-400 font-bold"
-              >performance</span
+              ></span
             >
           </h4>
         </div>
         <div
           class="absolute left-0 2xl:bottom-[-160px] bottom-[-130px] h-full w-full z-[-1]"
+          style="display: flex; justify-content: center; opacity: .6;"
         >
           <img
-            src="@/assets/images/auth/ils1.svg"
+            src="@/assets/images/logo/logo_unap.png"
+            style="width: 400px; margin-top: -90px;"
             alt=""
             class="h-full w-full object-contain"
           />
@@ -44,12 +58,14 @@
               <router-link to="/">
                 <img
                   src="@/assets/images/logo/logo.svg"
+                  width="130"
                   alt=""
                   class="mx-auto"
                   v-if="!this.$store.state.isDark"
                 />
                 <img
                   src="@/assets/images/logo/logo-white.svg"
+                  width="130"
                   alt=""
                   class="mx-auto"
                   v-else
@@ -57,38 +73,17 @@
               </router-link>
             </div>
             <div class="text-center 2xl:mb-10 mb-4">
-              <h4 class="font-medium">Sign in</h4>
+              <h4 class="font-medium">Ingresar al Sistema</h4>
               <div class="text-slate-500 text-base">
-                Sign in to your account to start using Dashcode
+                  <span style="height: 30px;"></span>
               </div>
             </div>
-            <Signin />
-            <div
-              class="relative border-b-[#9AA2AF] border-opacity-[16%] border-b pt-6"
-            >
-              <div
-                class="absolute inline-block bg-white dark:bg-slate-800 dark:text-slate-400 left-1/2 top-1/2 transform -translate-x-1/2 px-4 min-w-max text-sm text-slate-500 font-normal"
-              >
-                Or continue with
-              </div>
-            </div>
+            <Signin/>
             <div class="max-w-[242px] mx-auto mt-8 w-full">
-              <Social />
-            </div>
-            <div
-              class="md:max-w-[345px] mx-auto font-normal text-slate-500 dark:text-slate-400 mt-12 uppercase text-sm"
-            >
-              Don’t have an account? Sign up
-              <router-link
-                to="/register"
-                class="text-slate-900 dark:text-white font-medium hover:underline"
-              >
-                Sign up
-              </router-link>
             </div>
           </div>
           <div class="auth-footer text-center">
-            Copyright 2021, Dashcode All Rights Reserved.
+            Copyright&copy; 2023 - Unap Puno - Todos los derechos reservados
           </div>
         </div>
       </div>
@@ -97,11 +92,8 @@
 </template>
 <script>
 import Signin from "../common/Signin";
-import Social from "../common/Social";
-
 export default {
   components: {
-    Social,
     Signin,
   },
 };

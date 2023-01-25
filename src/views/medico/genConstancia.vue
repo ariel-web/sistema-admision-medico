@@ -65,7 +65,7 @@
               <label>Vista previa</label>
               <div class="col-span-12 sm:col-span-8 border mt-2 p-2 rounded-md ">
                 <div class="w-full" style="background-color: #f2f2f2;">
-                  <VistaPrevia/>
+                  <VistaPrevia :postulante="postulante" :dni="dni" :programa="programa"/>
                 </div>
               </div>
             </div>
@@ -115,7 +115,9 @@
   import VistaPrevia from "./componentes/vistaPrevia.vue"
   import VueSelect from '@/components/Select/VueSelect.vue';
   import axios from 'axios';
-  
+  import { useToast } from "vue-toastification";
+  const toast = useToast();
+
   export default {
     mixins: [window],
     components: { Textinput, Button, Card, InputGroup, VistaPrevia, VueSelect },
@@ -131,7 +133,6 @@
           nombres:'Jhon Ariel',
           paterno:'Luque',
           materno:'cusacani',
-
         },
         constancia : {
           codigo: '',
@@ -142,6 +143,7 @@
         data: null,
         programa_estudios:[],
         selected:'',
+        programa:'',
   
       };
     },
@@ -151,6 +153,7 @@
   
     methods:{
       async guardar() {
+        if (this.postulante.nombres !== null && this.dni !== null){
           this.data = {
             "postulante":this.postulante,
             "constancia":this.constancia,
@@ -165,7 +168,15 @@
             // this.PDF=response.data.datos;
             // this.url = response.data.datos.url;
             // this.PrintPdf(this.url);
+            this.dni = null;
+            this.postulante.paterno = null
+            this.postulante.materno = null
+            this.postulante.nombres = null
+            toast.success("Constancia Creada", {
+              timeout: 2000,
+            });
           });
+        }
       },
 
       switchSelect(event) {

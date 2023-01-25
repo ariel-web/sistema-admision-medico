@@ -34,7 +34,7 @@
 
         <div style="display: flex; width: 700px; justify-content: center;" >
             <div style="text-align: justify; font-size: 11pt;">
-                Que el Sr(a): JHON ARIEL LUQUE CUSACANI, identificado con D.N.I. N°: 70757838,
+                Que el Sr(a): <span style="text-transform: uppercase;">{{ postulante.nombres }} {{ postulante.paterno }} {{ postulante.materno }}</span>, identificado con D.N.I. N°: {{ dni }},
                 postulante al programa de Estudios de MEDICINA HUMANA, ha cumplido con el
                 EXAMEN MÉDICO quedando APTO para continuar su inscripción.
             </div>
@@ -70,6 +70,7 @@
    
 <script>
 export default {
+    props:['postulante','programa','dni'],
     mounted() {
         // var c = document.getElementById("myCanvas");
         // var ctx = c.getContext("2d");
