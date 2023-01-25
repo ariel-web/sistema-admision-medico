@@ -231,7 +231,7 @@
             "programa":this.programa,
             "tipo":1
           }
-          let res = axios.post("http://sistema-admision-back.test/api/guardar-constancia",this.data)
+          let res = axios.post("https://plankton-app-848ak.ondigitalocean.app/api/guardar-constancia",this.data)
           .then(response => {
             console.log(response);
             // this.PDF = response.data.datos;
@@ -256,12 +256,12 @@
       },
 
       async getConstancias(){
-        let res = await axios.get('http://sistema-admision-back.test/api/select-data/get-programa-estudios');
+        let res = await axios.get('https://plankton-app-848ak.ondigitalocean.app/api/select-data/get-programa-estudios');
         this.programa_estudios = res.data.datos;
       },
 
       async getProgramas(){
-        let res = await axios.get('http://sistema-admision-back.test/api/select-data/get-programa-estudios');
+        let res = await axios.get('https://plankton-app-848ak.ondigitalocean.app/api/select-data/get-programa-estudios');
         this.programa_estudios = res.data.datos;
       },
 
