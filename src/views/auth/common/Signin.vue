@@ -119,7 +119,7 @@ export default {
           toast.error("Contraseña o usuario incorrectos", { 
               timeout: 2000,
           });
-
+ 
         });
 
     };
