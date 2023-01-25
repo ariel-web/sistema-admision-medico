@@ -52,7 +52,7 @@
         >¿Olvidaste tu contraseña?</router-link
       >
     </div>
-    <button @click="onSubmit" class="btn btn-dark block w-full text-center">
+    <button @click="guardar" class="btn btn-dark block w-full text-center">
       Ingresar
     </button>
   </div>
@@ -121,7 +121,7 @@ export default {
           });
 
         });
-        console.log(res.data);
+
     };
 
 
