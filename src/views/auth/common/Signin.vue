@@ -102,7 +102,7 @@ export default {
 
     const guardar = async () => {        
         let res = await axios.post(
-          "https://plankton-app-848ak.ondigitalocean.app/api/auth/login",
+          "/auth/login",
           { email: email.value, password: password.value }
         )  
         .then(function (response) {

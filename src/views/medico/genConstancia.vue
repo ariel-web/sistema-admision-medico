@@ -256,12 +256,12 @@
       },
 
       async getConstancias(){
-        let res = await axios.get('https://plankton-app-848ak.ondigitalocean.app/api/select-data/get-programa-estudios');
+        let res = await axios.get('/select-data/get-programa-estudios');
         this.programa_estudios = res.data.datos;
       },
 
       async getProgramas(){
-        let res = await axios.get('https://plankton-app-848ak.ondigitalocean.app/api/select-data/get-programa-estudios');
+        let res = await axios.get('/select-data/get-programa-estudios');
         this.programa_estudios = res.data.datos;
       },
 

@@ -181,7 +181,7 @@
 
     methods:{
       async getConstancias(){
-        let res = await axios.post('https://plankton-app-848ak.ondigitalocean.app/api/get-constancias-medicas');
+        let res = await axios.post('/get-constancias-medicas');
         this.constancias = res.data.datos.data;
       },
     },
