@@ -115,7 +115,7 @@ export default createStore({
     },
     deleteResaddRespuesta(context, valueID) {
       return axios
-        .post("api/delete", JSON.stringify({ id: valueID }))
+        .post("https://plankton-app-848ak.ondigitalocean.app/api/delete", JSON.stringify({ id: valueID }))
         .then((response) => {
           context.commit("deletevalue", valueID);
         });
@@ -124,7 +124,7 @@ export default createStore({
     // toogleDark
     async login ({dispatch}, credenciales) {        
       let res = await axios.post(
-        "/auth/login",
+        "https://plankton-app-848ak.ondigitalocean.app/api/auth/login",
         credenciales
       )  
       .then(function (response) {
