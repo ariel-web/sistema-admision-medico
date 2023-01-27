@@ -194,11 +194,11 @@ export default defineComponent({
     // open
     const openModal = () => {
       isOpen.value = !isOpen.value;
-    };
+    }
     // close
-    const closeModal = () => {
-      isOpen.value = false;
-    };
+    // const closeModal = () => {
+    //   isOpen.value = false;
+    // }
 
     return { closeModal, openModal, isOpen };
   },

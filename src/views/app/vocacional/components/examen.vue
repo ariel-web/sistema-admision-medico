@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <div v-for="(item, index) in preguntas" :key="item.id" style="margin-bottom: 20px;">
           <card>          
             <div style="margin-bottom: 20px;"> <h6> {{ item.pregunta }} </h6> </div>
@@ -121,6 +120,16 @@ import Card from "@/components/Card";
 import Radio from "@/components/Radio";
 import Image from '@/components/Image';
 import Button from "@/components/Button";
+import Modal from '@/components/Modal/Modal';
+import { defineComponent, ref } from "vue";
+
+import {
+  TransitionRoot,
+  TransitionChild,
+  Dialog,
+  DialogPanel,
+} from "@headlessui/vue";
+
 // import { advancedTable } from "@/constant/basic-tablle-data";
 import axios from 'axios';
 import { getPointOnLine } from "@amcharts/amcharts5/.internal/core/util/Math";
@@ -131,7 +140,12 @@ export default {
       Card,
       Radio,
       Image,
-      Button
+      Button,
+      TransitionRoot,
+      TransitionChild,
+      Dialog,
+      DialogPanel,
+
         //Pregunta
     },
 
@@ -157,23 +171,37 @@ export default {
   methods:{
     
     async getPreguntas(){
-      let res = await axios.get('http://sistema-admision-back.test/api/preguntas');
+      let res = await axios.get('/preguntas');
       this.preguntas = res.data.datos;
     },
 
     async GuardarExamen(){
-      let res = await axios.post('http://sistema-admision-back.test/api/guardar-examen',this.res);
+      let res = await axios.post('/guardar-examen',this.res);
     },
 
   },
 
   // computed:mapGetters(['allRespuestas']),
-
   mounted() {
     this.getPreguntas();
     // this.fetchrespuestas(); 
   },
 
+  setup(props) {
+    const isOpen = ref(props.activeModal);
+
+    const openModal = () => {
+        isOpen.value = !isOpen.value;
+    };
+    // close
+    const closeModal = () => {
+        isOpen.value = false;
+    };
+
+
+    return { closeModal, openModal, isOpen };
+  },
 
 };
+
 </script>

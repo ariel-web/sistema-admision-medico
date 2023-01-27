@@ -23,8 +23,8 @@ import VCalendar from "v-calendar";
 import "v-calendar/dist/style.css";
 import axios from "axios";
 
-//axios.defaults.baseURL = 'https://plankton-app-848ak.ondigitalocean.app/api';
-axios.defaults.baseURL = 'http://sistema-admision-back.test/api';
+axios.defaults.baseURL = 'https://plankton-app-848ak.ondigitalocean.app/api';
+//axios.defaults.baseURL = 'http://sistema-admision-back.test/api';
 
 
 if (localStorage.users === undefined) {
