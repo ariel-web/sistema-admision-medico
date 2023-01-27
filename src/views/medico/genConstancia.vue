@@ -198,7 +198,7 @@
         clave:1,
         size:"8", 
         auto:"true", 
-        characters:"a-z,A-Z,0-9",
+        characters:"a-z,A-Z,0-9", 
         postulante: {
           nombres:'Jhon Ariel',
           paterno:'Luque',
