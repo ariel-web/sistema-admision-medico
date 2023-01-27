@@ -124,7 +124,7 @@ export default createStore({
     // toogleDark
     async login ({dispatch}, credenciales) {        
       let res = await axios.post(
-        "/auth/login",
+        "https://plankton-app-848ak.ondigitalocean.app/api/auth/login",
         credenciales
       )  
       .then(function (response) {
@@ -149,7 +149,7 @@ export default createStore({
       const config = {
         headers: { Authorization: `Bearer ${'33|UcmAiiNooJisYyEnXvLioZYHOQMoDuctjR5qXjag'}` }
       }
-      await axios.get("/auth/user",config)
+      await axios.get("https://plankton-app-848ak.ondigitalocean.app/api/auth/user",config)
       .then(res=>{  
         commit('setUser',res.data);
         commit('setAut',true);
