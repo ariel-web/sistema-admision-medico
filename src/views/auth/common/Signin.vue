@@ -52,7 +52,7 @@
         >¿Olvidaste tu contraseña?</router-link
       >
     </div>
-    <button @click="guardar" class="btn btn-dark block w-full text-center">
+    <button @click="login({ email: email, password: password })" class="btn btn-dark block w-full text-center">
       Ingresar
     </button>
   </div>
@@ -61,6 +61,7 @@
 import Textinput from "@/components/Textinput";
 import { useField, useForm } from "vee-validate";
 import * as yup from "yup";
+import { mapActions } from 'vuex'
 import axios from "axios";
 
 import { useRouter } from "vue-router";
@@ -73,6 +74,9 @@ export default {
     return {
       checkbox: false,
     };
+  },
+  methods: {
+        ...mapActions(['login']),
   },
   setup() {
     // Define a validation schema
@@ -89,75 +93,18 @@ export default {
       password: "12345678",
     };
 
-    const { handleSubmit } = useForm({
-      validationSchema: schema,
-      initialValues: formValues,
-    });
+
     // No need to define rules for fields
   
-
     const { value: email, errorMessage: emailError } = useField("email");
     const { value: password, errorMessage: passwordError } =
     useField("password");
-
-    const guardar = async () => {        
-        let res = await axios.post(
-          "/auth/login",
-          { email: email.value, password: password.value }
-        )  
-        .then(function (response) {
-          if (response.status === 200){
-            localStorage.setItem("activeUser", JSON.stringify(response.data.datos));
-            console.log(response);
-            router.push("/app/home");
-            toast.success("Ingresando al Sistema", {
-              timeout: 2000,
-            });
-          }
-        })
-        .catch(function (error) {
-          toast.error("Contraseña o usuario incorrectos", { 
-              timeout: 2000,
-          });
- 
-        });
-
-    };
-
-
-    const onSubmit = handleSubmit((values) => {
-      let isUser = localStorage.users;
-      isUser = JSON.parse(isUser);
-
-      let userIndex = isUser.findIndex((user) => user.email === values.email);
-
-      if (userIndex > -1) {
-        let activeUser = isUser.find((user) => user.email === values.email);
-        localStorage.setItem("activeUser", JSON.stringify(activeUser));
-
-        if (isUser[userIndex].password === values.password) {
-          router.push("/app/home");
-          toast.success("Ingresando al Sistema", {
-            timeout: 2000,
-          });
-        } else {
-          toast.error("La contraseña Incorrecta", {
-            timeout: 2000,
-          });
-        }
-      } else {
-        toast.error("Usuario no encontrado", {
-          timeout: 2000,
-        });
-      }
-    });
 
     return {
       email,
       emailError,
       password,
       passwordError,
-      guardar,
 
     };
   },

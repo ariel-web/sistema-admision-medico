@@ -4,6 +4,14 @@ import email from "./app/email";
 import kanban from "./app/kanban";
 import project from "./app/project";
 import apptodo from "./app/todo";
+import examen from "./examen"
+
+import axios from "axios";
+import { useToast } from "vue-toastification";
+import router from "../router/index";
+
+const toast = useToast();
+
 export default createStore({
   state: {
     sidebarCollasp: false,
@@ -24,6 +32,13 @@ export default createStore({
     chartColors: {
       title: "red",
     },
+    user:null,
+    aut:false,
+
+
+
+    respuestas:[],
+    respuesta:null
   },
   getters: {
     theme: (state) => state.theme,
@@ -31,6 +46,30 @@ export default createStore({
     direction: (state) => state.direction,
   },
   mutations: {
+    addRespuesta(state, value) {
+      state.respuestas.push(value);
+      console.log(state.respuestas)
+    },
+    updateRespuesta(state, respuesta) {
+      let index = state.respuestas.findIndex((c) => c.id == respuesta.id);
+      if (index > -1) {
+        state.respuestas[index] = respuesta;
+      }
+    },
+    deleteRespuesta(state, valueID) {
+      let index = state.respuestas.findIndex((c) => c.id == valueID);
+      if (index > -1) {
+        state.respuestas.splice(index, 1);
+      }
+    },
+    
+    setUser(state, value){
+      state.user = value;
+    },
+    setAut(state, value){
+      state.aut = value;
+    },
+
     setSidebarCollasp(state) {
       state.sidebarCollasp = !state.sidebarCollasp;
     },
@@ -56,7 +95,71 @@ export default createStore({
     },
   },
   actions: {
+
+    addRespuesta(context, value) {
+      return axios
+        .post("api/save", JSON.stringify(value))
+        .then((response) => {
+          context.commit("addvalue", {
+            id: response.data.insert_id,
+            ...value
+          });
+        });
+    },
+    updateResaddRespuesta(context, value) {
+      return axios
+        .post("api/update", JSON.stringify(value))
+        .then((response) => {
+          context.commit("updatevalue", value);
+        });
+    },
+    deleteResaddRespuesta(context, valueID) {
+      return axios
+        .post("api/delete", JSON.stringify({ id: valueID }))
+        .then((response) => {
+          context.commit("deletevalue", valueID);
+        });
+    },
+
     // toogleDark
+    async login ({dispatch}, credenciales) {        
+      let res = await axios.post(
+        "/auth/login",
+        credenciales
+      )  
+      .then(function (response) {
+        if (response.status === 200){
+          localStorage.setItem("activeUser", JSON.stringify(response.data.datos));
+          toast.success("Ingresando al Sistema", {
+            timeout: 1500,
+          });
+          router.push("/app/home");
+        }
+      })
+      .catch(function (error) {
+        toast.error("Contraseña o usuario incorrectos", { 
+            timeout: 1500,
+        });
+      });
+
+      return dispatch('getUser');
+    },
+
+    async getUser({ commit}) {
+      const config = {
+        headers: { Authorization: `Bearer ${'33|UcmAiiNooJisYyEnXvLioZYHOQMoDuctjR5qXjag'}` }
+      }
+      await axios.get("/auth/user",config)
+      .then(res=>{  
+        commit('setUser',res.data);
+        commit('setAut',true);
+      })
+      .catch(()=>{
+        commit('setUser',null);
+      })
+    },
+
+
     toogleDark({ commit }) {
       commit("toogleDark");
     },
@@ -78,11 +181,19 @@ export default createStore({
 
     // setTheme
   },
+
+  getters: {
+    getRespuestas(state) {
+      return state.respuestas;
+    }
+  },
+
   modules: {
     apptodo,
     project,
     kanban,
     email,
     chat,
+    examen
   },
 });

@@ -101,7 +101,7 @@
   </ul>
 </template>
 <script>
-import { topMenu } from "../../../constant/data.js";
+// import { topMenu } from "../../../constant/data.js";
 import Icon from "../../Icon";
 export default {
   components: {
@@ -109,7 +109,7 @@ export default {
   },
   data() {
     return {
-      topMenu,
+      // topMenu,
     };
   },
 

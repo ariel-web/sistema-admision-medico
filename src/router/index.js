@@ -85,6 +85,15 @@ const routes = [
         component: () => import("@/views/blank-page.vue"),
       },
       {
+        path: "todo",
+        name: "todo",
+        component: () => import("@/views/app/todo"),
+        meta: {
+          hide: true,
+          appheight: true,
+        },
+      },
+      {
         path: "notifications",
         name: "notifications",
         component: () => import("@/views/notifications.vue"),
@@ -525,9 +534,9 @@ const routes = [
         },
       },
       {
-        path: "/app/constancias",
-        name: "Constancia Medica",
-        component: () => import("@/views/medico/genConstancia.vue"),
+        path: "/app/vocacional",
+        name: "exvocacional",
+        component: () => import("@/views/app/vocacional/index.vue"),
         meta: {
           hide: true,
         },

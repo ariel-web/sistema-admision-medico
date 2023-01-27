@@ -91,9 +91,9 @@ export default {
       usuario: {}
     };
   },
-  created(){
-    this.usuario = JSON.parse(localStorage.getItem('activeUser'));
-  }
+  // created(){
+  //   this.usuario = JSON.parse(localStorage.getItem('activeUser'));
+  // }
 };
 </script>
 <style lang=""></style>

@@ -21,8 +21,14 @@ export const menuItems = [
     icon: "heroicons-outline:printer",
     link: "verconstancias",
   },
+  {
+    title: "Examen vocacional",
+    icon: "heroicons-outline:clipboard-list",
+    link: "vocacional",
+  },
 
 ];
+
 
 // menuseetins
 
@@ -203,8 +209,7 @@ export const alertType2 = [
   {
     type: "info-light",
   },
-  {
-    type: "danger-light",
+  {  type: "danger-light",
   },
   {
     type: "warning-light",

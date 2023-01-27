@@ -25,6 +25,9 @@
                 <div>
                   <div><h6 style="font-size:1.1rem;">UNIVERSIDAD NACIONAL DEL ALTIPLANO</h6></div>
                   <div>Comisión de admisión 2023</div>
+                  <div >
+                    {{this.$store.state.aut}}
+                  </div>
                 </div> 
               </div>
             </div>

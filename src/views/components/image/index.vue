@@ -45,10 +45,12 @@
 <script>
 import Card from '@/components/Card';
 import Image from '@/components/Image';
+import Button from "@/components/Button";
 export default {
   components: {
     Card,
     Image,
+    Button
   },
   data() {
     return {

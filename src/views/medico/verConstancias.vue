@@ -105,7 +105,7 @@
                   :pageChanged="props.pageChanged"
                   :perPageChanged="props.perPageChanged"
                 >
-                  >
+
                 </Pagination>
               </div>
             </template>
@@ -113,7 +113,7 @@
         </div>
       </Card>
     </div>
-  </template>
+  </template> 
   <script>
   import Card from "@/components/Card";
   import Icon from "@/components/Icon";

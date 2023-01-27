@@ -16,4 +16,3 @@ const toggleMsidebar = () => {
   store.dispatch("toggleMsidebar");
 };
 </script>
-<style lang="scss"></style>

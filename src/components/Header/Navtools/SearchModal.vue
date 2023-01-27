@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div>
     <button
       @click="openModal"
@@ -176,4 +176,4 @@ function closeModal() {
 function openModal() {
   isOpen.value = true;
 }
-</script>
+</script> -->
