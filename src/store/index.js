@@ -118,7 +118,7 @@ export default createStore({
         .post("https://plankton-app-848ak.ondigitalocean.app/api/delete", JSON.stringify({ id: valueID }))
         .then((response) => {
           context.commit("deletevalue", valueID);
-        });
+        }); 
     },
 
     // toogleDark
