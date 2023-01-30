@@ -1,4 +1,5 @@
 <template>
+  
   <div class="space-y-4">
     <Textinput
       label="Correo"
@@ -75,9 +76,18 @@ export default {
       checkbox: false,
     };
   },
+
   methods: {
-        ...mapActions(['login']),
+    ...mapActions(['login']),
+
   },
+
+  onMounted() {
+    if(localStorage.activeUser){
+        this.router.push("/home");
+    }
+  },
+
   setup() {
     // Define a validation schema
     const schema = yup.object({
@@ -93,12 +103,14 @@ export default {
       password: "12345678",
     };
 
-
     // No need to define rules for fields
   
     const { value: email, errorMessage: emailError } = useField("email");
     const { value: password, errorMessage: passwordError } =
     useField("password");
+
+
+    
 
     return {
       email,

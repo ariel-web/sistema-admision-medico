@@ -1,6 +1,7 @@
 <template>
   <div class="h-20 w-20 mx-auto" v-if="!isLoading">
-    <img src="@/assets/images/svg/loader.svg" alt="" />
+    <img src="@/assets/images/logo/logo_unap.png" alt="" />
+    <h1>Alo King</h1>
   </div>
 </template>
 <script>

@@ -1,99 +1,154 @@
 <template>
-  <div style="height: calc(100vh - 200px);">
-    <div>
-      <Card
-        imaClass="rounded-md"
-        noborder
+  <div>
+    {{ postulante }}
+    <VueSelect label="Label">
+     <vSelect type="text" :options="books" v-model="postulante" 
+      value="title" label="title"
+      :searchable="true"
+      :close-on-select="false"
+      :show-labels="false"
       >
-      <div style="background: yellow; height: calc(100vh - 500px); align-items: center; justify-content: center;">
-        <div style="max-width: 300px;"> 
-          <Textinput
-              v-model="dni"
-              name="ValidState"
-              type="text"
-              placeholder="Ingrese su dni"  
-              block
-            />
-        </div>
-      </div>      
-        <!-- <div class="mt-4 space-x-4 rtl:space-x-reverse">
-          <label v-if="clave_seguridad !== '' ">{{ clave_seguridad }}</label>
-        </div>
-
-        <div class="mt-4 space-x-4 rtl:space-x-reverse">
-          <Button text="Iniciar Postulación" btnClass="btn-primary btn-sm" />
-        </div> -->
-      </Card>
-    </div>
+        <template #option="{ title, icon }">
+          <span class="flex items-center">
+            <span class="inline-block mr-2"><Icon :icon="icon"/></span>
+            <span>{{ title }}</span>
+          </span>
+        </template>
+      </vSelect>
+    </VueSelect>
   </div>
+
+  <TabGroup>
+    <TabList class="lg:space-x-8 md:space-x-4 space-x-0 rtl:space-x-reverse">
+      <Tab
+        v-slot="{ selected }"
+        as="template"
+        v-for="(item, i) in buttons"
+        :key="i"
+      >
+        <button
+          :class="[
+            selected
+              ? 'text-primary-500 before:w-full'
+              : 'text-slate-500 before:w-0 dark:text-slate-300',
+          ]"
+          class="inline-flex items-start text-sm font-medium mb-7 capitalize bg-white dark:bg-slate-800 ring-0 foucs:ring-0 focus:outline-none px-2 transition duration-150 before:transition-all before:duration-150 relative before:absolute before:left-1/2 before:bottom-[-6px] before:h-[1.5px] before:bg-primary-500 before:-translate-x-1/2"
+        >
+          <span class="text-base relative top-[1px] ltr:mr-1 rtl:ml-1"
+            ><Icon :icon="item.icon" /></span
+          >{{ item.title }}
+        </button>
+      </Tab>
+    </TabList>
+    <TabPanels>
+      <TabPanel>
+        <div class="text-slate-600 dark:text-slate-400 text-sm font-normal">
+          <!-- <Postulante/> -->
+        </div>
+      </TabPanel>
+      <TabPanel>
+        <div class="text-slate-600 dark:text-slate-400 text-sm font-normal">
+          Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui
+          esse pariatur duis deserunt mollit dolore cillum minim tempor enim.
+        </div>
+      </TabPanel>
+      <TabPanel>
+        <div class="text-slate-600 dark:text-slate-400 text-sm font-normal">
+          Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui
+        </div>
+      </TabPanel>
+      <TabPanel>
+        <div class="text-slate-600 dark:text-slate-400 text-sm font-normal">
+          Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui
+          esse pariatur duis deserunt mollit dolore cillum minim tempor enim.
+          Elit aute irure tempor cupidatat incididunt sint deserunt ut voluptate
+          aute id deserunt nisi.
+        </div></TabPanel
+      >
+    </TabPanels>
+  </TabGroup>
 </template>
+
 <script>
-import window from "@/mixins/window";
-import Textinput from "@/components/Textinput";
-import Button from "@/components/Button";
-import Card from "@/components/Card";
+import Icon from "@/components/Icon";
+import VueSelect from "@/components/Select/VueSelect";
+import vSelect from "vue-select";
+import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
+
+const buttons = [
+  {
+    title: "Postulante",
+    icon: "heroicons-outline:user",
+  },
+  {
+    title: "Padres",
+    icon: "heroicons-outline:chat-alt-2",
+  },
+  {
+    title: "Colegio",
+    icon: "heroicons-outline:home",
+  },
+  {
+    title: "Documentos",
+    icon: "heroicons-outline:cog",
+  },
+];
 
 export default {
-  mixins: [window],
-  components: { Textinput, Button, Card },
+  components: {
+    VueSelect,
+    vSelect,
+    Icon,
+    TabGroup, 
+    TabList,
+    Tab, 
+    TabPanels, 
+    TabPanel,
+    buttons
+  },
   data() {
     return {
-      dni:'',
-      clave:1,
-      email: '',
-      clave_seguridad:'',
-      size:"8", 
-      auto:"true", 
-      characters:"a-z,A-Z,0-9"
-
+      postulante: '',
+      books: [
+        {
+          title: "Database",
+          icon: "heroicons-outline:database",
+        },
+        {
+          title: "Server",
+          icon: "heroicons-outline:server",
+        },
+        {
+          title: "Finger Print",
+          icon: "heroicons-outline:finger-print",
+        },
+      ],
     };
+    
   },
-
   methods:{
-    generate() {
-      let charactersArray = this.characters.split(',');  
-      let CharacterSet = '';
-      let password = '';
-      
-      if( charactersArray.indexOf('a-z') >= 0) {
-        CharacterSet += 'abcdefghijklmnopqrstuvwxyz';
-      }
-      if( charactersArray.indexOf('A-Z') >= 0) {
-        CharacterSet += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-      }
-      if( charactersArray.indexOf('0-9') >= 0) {
-        CharacterSet += '0123456789';
-      }
-      if( charactersArray.indexOf('#') >= 0) {
-        CharacterSet += '![]{}()%&*$#^<>~@|';
-      }
-      
-      for(let i=0; i < this.size; i++) {
-        password += CharacterSet.charAt(Math.floor(Math.random() * CharacterSet.length));
-      }
-      this.clave_seguridad = password;
-    }
-  },
-  watch:{ 
-    dni: function(){
-      if(this.clave === 1){ 
-        if(this.dni.length === 8){
-          this.clave = 0
-          this.generate()
-        }    
-      }
-
+    async getPostulante(){
+      let res = await axios.post(
+        "https://plankton-app-848ak.ondigitalocean.app/api/get-postulantes",
+        this.postulante
+      )  
+      .then(function (response) {
+        if (response.status === 200){
+          console.log(response.data);
+          toast.success("Postulante encontrado", {
+            timeout: 1500,
+          });
+        }
+      })
+      .catch(function (error) {
+        console.log(error)
+      });
     },
+  },
+  watch:{
+    postulante(){
+      this.getPostulante();
+    }
   }
-  // watch:{
-  //   dni:function(){
-  //     //if(this.length === 8){
-  //       this.generate()
-  //     //}
-
-  //   }
-  // }
-
-
 };
 </script>

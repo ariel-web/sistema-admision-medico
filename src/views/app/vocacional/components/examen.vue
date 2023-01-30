@@ -106,7 +106,7 @@
         </div> 
         
 
-        <Button text="Dark" btnClass="btn-dark"  @click="GuardarExamen"/>
+        <Button text="Finalizar Examen" btnClass="btn-dark"  @click="GuardarExamen"/>
         <div>
         <!-- <div class="grid grid-cols-1 gap-5" v-for="(item, index) in preguntas" :key="item.id">
             <Pregunta :pregunta="item.pregunta"  :items="item.respuestas" />

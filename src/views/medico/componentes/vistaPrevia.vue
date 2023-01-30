@@ -14,7 +14,7 @@
                 <img src="../../../assets/images/logo/logoDAD.png" width="60"/>
             </div>
         </div>
-
+        
         <div style="display: flex; width: 600px; justify-content: center;" >
             <span style="font-weight: bold; font-size: 14pt;">CONSTANCIA</span>
         </div>

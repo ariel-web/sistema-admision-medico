@@ -114,7 +114,10 @@
           }
         "
       >
-        <Navmenu :items="menuItems" />
+        <div >
+            <Navmenu :items="menu" />
+        </div>
+
 
       </SimpleBar>
     </div>
@@ -123,7 +126,7 @@
 <script>
 // import { Icon } from "@iconify/vue";
 import { defineComponent } from "vue";
-import { menuItems } from "../../constant/data";
+import { menuItems, menuItemsVerificador } from "../../constant/data";
 import Navmenu from "./Navmenu";
 import { gsap } from "gsap";
 import { SimpleBar } from "simplebar-vue3";
@@ -136,12 +139,32 @@ export default defineComponent({
     SimpleBar,
   },
   data() {
+    // const menu = menuItems;
     return {
       menuItems,
+      menuItemsVerificador,
       openClass: "w-[248px]",
       closeClass: "w-[72px] close_sidebar",
-    };
+      menu:null,
+      use:null
+    }
   },
+
+  created(){
+    if(localStorage.activeUser){
+      this.use = JSON.parse(localStorage.getItem('activeUser'));
+      if( this.use.rol === 1){
+        this.menu = menuItemsVerificador;    
+      }
+      if( this.use.rol === 2){
+        this.menu = menuItems;    
+      }
+
+    }
+  },
+
+
+
 
   setup() {
     const shadowbase = ref(false);

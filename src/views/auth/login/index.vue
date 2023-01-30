@@ -99,6 +99,17 @@ export default {
   components: {
     Signin,
   },
+  // created() {
+  //   this.sesionActiva()
+  // },
+  // methods:{
+  //   sesionActiva() {
+  //     if (localStorage.activeUser) {
+  //       this.$router.push('/home');
+  //       console.log("Sesion iniciada");
+  //     } else next({ name: "Login" });
+  //   }
+  // }
 };
 </script>
 <style lang="scss"></style>

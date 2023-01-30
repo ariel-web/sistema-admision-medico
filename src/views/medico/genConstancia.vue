@@ -198,7 +198,7 @@
         clave:1,
         size:"8", 
         auto:"true", 
-        characters:"a-z,A-Z,0-9", 
+        characters:"a-z,A-Z,0-9",
         postulante: {
           nombres:'Jhon Ariel',
           paterno:'Luque',
@@ -231,7 +231,7 @@
             "programa":this.programa,
             "tipo":1
           }
-          let res = axios.post("https://plankton-app-848ak.ondigitalocean.app/api/guardar-constancia",this.data)
+          let res = axios.post("/guardar-constancia",this.data)
           .then(response => {
             console.log(response);
             // this.PDF = response.data.datos;
@@ -290,6 +290,7 @@
       },
 
       PrintPdf (URL) {
+        console.log(URL);
         var iframe = document.createElement('iframe');
         iframe.style.display = "none";
         iframe.src = URL;

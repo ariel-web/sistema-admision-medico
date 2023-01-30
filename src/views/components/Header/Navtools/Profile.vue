@@ -69,7 +69,7 @@ export default {
           label: "Perfil",
           icon: "heroicons-outline:user",
           link: () => {
-            this.$router.push("perfil");
+            this.$router.push("profile");
           },
         },
         {
